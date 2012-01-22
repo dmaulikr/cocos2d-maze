@@ -124,6 +124,8 @@
 		C2A9F82A14CB4A3200F18C15 /* GameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = C2A9F82A14CB4A3200F18C14 /* GameScene.m */; };
 		C2A9F82A14CB4A3200F18C18 /* GameLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = C2A9F82A14CB4A3200F18C17 /* GameLayer.m */; };
 		C2A9F82A14CB4A3200F18C1B /* MazeGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = C2A9F82A14CB4A3200F18C1A /* MazeGenerator.m */; };
+		C2A9F82A14CB4A3200F18C1E /* walls.plist in Resources */ = {isa = PBXBuildFile; fileRef = C2A9F82A14CB4A3200F18C1D /* walls.plist */; };
+		C2A9F82A14CB4A3200F18C20 /* walls.png in Resources */ = {isa = PBXBuildFile; fileRef = C2A9F82A14CB4A3200F18C1F /* walls.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -366,6 +368,8 @@
 		C2A9F82A14CB4A3200F18C19 /* GameLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameLayer.h; path = Layers/GameLayer.h; sourceTree = "<group>"; };
 		C2A9F82A14CB4A3200F18C1A /* MazeGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MazeGenerator.m; path = Generator/MazeGenerator.m; sourceTree = "<group>"; };
 		C2A9F82A14CB4A3200F18C1C /* MazeGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MazeGenerator.h; path = Generator/MazeGenerator.h; sourceTree = "<group>"; };
+		C2A9F82A14CB4A3200F18C1D /* walls.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; name = walls.plist; path = Resources/walls/walls.plist; sourceTree = "<group>"; };
+		C2A9F82A14CB4A3200F18C1F /* walls.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = walls.png; path = Resources/walls/walls.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -443,6 +447,8 @@
 		C2A9F6CB14CB4A2F00F18C13 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				C2A9F82A14CB4A3200F18C1F /* walls.png */,
+				C2A9F82A14CB4A3200F18C1D /* walls.plist */,
 				C2A9F6CC14CB4A2F00F18C13 /* Default.png */,
 				C2A9F6CE14CB4A2F00F18C13 /* fps_images.png */,
 				C2A9F6D014CB4A2F00F18C13 /* Icon-72.png */,
@@ -827,6 +833,8 @@
 				C2A9F6D914CB4A2F00F18C13 /* Icon.png in Resources */,
 				C2A9F6DB14CB4A2F00F18C13 /* Icon@2x.png in Resources */,
 				C2A9F6DE14CB4A2F00F18C13 /* iTunesArtwork in Resources */,
+				C2A9F82A14CB4A3200F18C1E /* walls.plist in Resources */,
+				C2A9F82A14CB4A3200F18C20 /* walls.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
