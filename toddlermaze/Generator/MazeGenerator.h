@@ -22,6 +22,7 @@ static const CGPoint kEast = {1, 0};
 
 @interface MazeGenerator : NSObject
 @property (nonatomic, retain) NSMutableDictionary *grid;
+@property (nonatomic, assign) CGSize size;
 - (void)generate;
 
 - (void)addToNeighbors:(MazeCell *)cell;

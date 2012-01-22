@@ -127,6 +127,8 @@
 		C2A9F82A14CB4A3200F18C22 /* square.png in Resources */ = {isa = PBXBuildFile; fileRef = C2A9F82A14CB4A3200F18C21 /* square.png */; };
 		C2A9F82A14CB4A3200F18C24 /* vert.png in Resources */ = {isa = PBXBuildFile; fileRef = C2A9F82A14CB4A3200F18C23 /* vert.png */; };
 		C2A9F82A14CB4A3200F18C26 /* horiz.png in Resources */ = {isa = PBXBuildFile; fileRef = C2A9F82A14CB4A3200F18C25 /* horiz.png */; };
+		C2A9F82A14CB4A3200F18C28 /* walls.plist in Resources */ = {isa = PBXBuildFile; fileRef = C2A9F82A14CB4A3200F18C27 /* walls.plist */; };
+		C2A9F82A14CB4A3200F18C2A /* walls.png in Resources */ = {isa = PBXBuildFile; fileRef = C2A9F82A14CB4A3200F18C29 /* walls.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -372,6 +374,8 @@
 		C2A9F82A14CB4A3200F18C21 /* square.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = square.png; path = Resources/walls/square.png; sourceTree = "<group>"; };
 		C2A9F82A14CB4A3200F18C23 /* vert.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = vert.png; path = Resources/walls/vert.png; sourceTree = "<group>"; };
 		C2A9F82A14CB4A3200F18C25 /* horiz.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = horiz.png; path = Resources/walls/horiz.png; sourceTree = "<group>"; };
+		C2A9F82A14CB4A3200F18C27 /* walls.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; name = walls.plist; path = Resources/walls/walls.plist; sourceTree = "<group>"; };
+		C2A9F82A14CB4A3200F18C29 /* walls.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = walls.png; path = Resources/walls/walls.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -452,6 +456,8 @@
 		C2A9F6CB14CB4A2F00F18C13 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				C2A9F82A14CB4A3200F18C29 /* walls.png */,
+				C2A9F82A14CB4A3200F18C27 /* walls.plist */,
 				C2A9F6CC14CB4A2F00F18C13 /* Default.png */,
 				C2A9F6CE14CB4A2F00F18C13 /* fps_images.png */,
 				C2A9F6D014CB4A2F00F18C13 /* Icon-72.png */,
@@ -839,6 +845,8 @@
 				C2A9F82A14CB4A3200F18C22 /* square.png in Resources */,
 				C2A9F82A14CB4A3200F18C24 /* vert.png in Resources */,
 				C2A9F82A14CB4A3200F18C26 /* horiz.png in Resources */,
+				C2A9F82A14CB4A3200F18C28 /* walls.plist in Resources */,
+				C2A9F82A14CB4A3200F18C2A /* walls.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

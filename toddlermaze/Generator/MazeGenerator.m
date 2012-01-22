@@ -47,7 +47,6 @@
 @end
 
 @interface MazeGenerator ()
-@property (nonatomic, assign) CGSize size;
 @property (nonatomic, assign) float complexity;
 @property (nonatomic, assign) float density;
 @property (nonatomic, assign) CGPoint start;

@@ -8,4 +8,5 @@
 
 @interface GameLayer : CCLayer
 
+- (void)loadGeneratedMaze;
 @end

@@ -18,6 +18,12 @@
     CCSpriteBatchNode *wallSprites = [CCSpriteBatchNode batchNodeWithFile:@"walls.png" capacity:4];
     [self addChild:wallSprites];
     [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"walls.plist"];
+    [self loadGeneratedMaze];
+    return self;
+}
+
+- (void)loadGeneratedMaze
+{
     MazeGenerator *generator = [[[MazeGenerator alloc] init] autorelease];
     [generator.grid enumerateKeysAndObjectsUsingBlock:
         ^(id cellKey, id cell, BOOL *cellStop) {
@@ -28,18 +34,19 @@
                     CCSprite *wall = nil;
                     CGPoint wallPos = cellPoint;
                     if (neighborPoint.x < cellPoint.x) {
-                        wall = [CCSprite spriteWithFile:@"vert.png"];
+                        wall = [CCSprite spriteWithSpriteFrameName:@"vert.png"];
                         wallPos.x -= 16;
                     } else if (neighborPoint.x > cellPoint.x) {
-                        wall = [CCSprite spriteWithFile:@"vert.png"];
+                        wall = [CCSprite spriteWithSpriteFrameName:@"vert.png"];
                         wallPos.x += 16;
                     } else if (neighborPoint.y < cellPoint.y) {
-                        wall = [CCSprite spriteWithFile:@"horiz.png"];
+                        wall = [CCSprite spriteWithSpriteFrameName:@"horiz.png"];
                         wallPos.y -= 16;
                     } else {
-                        wall = [CCSprite spriteWithFile:@"horiz.png"];
+                        wall = [CCSprite spriteWithSpriteFrameName:@"horiz.png"];
                         wallPos.y += 16;
                     }
+                    [wall setColor:ccGRAY];
                     [wall setAnchorPoint:ccp(0.5, 0.5)];
                     [wall setPosition:wallPos];
                     [self addChild:wall];
@@ -47,7 +54,15 @@
             ];
         }
     ];
-    return self;
+    // determine are maze center
+    CGPoint mazeCenter = ccp(generator.size.width/2 * 32, generator.size.height/2 * 32);
+    // determine the window center
+    CGSize winSize = [[CCDirector sharedDirector] winSize];
+    CGPoint winCenter = ccp(winSize.width/2, winSize.height/2);
+    // determine the difference between the two
+    CGPoint diff = ccpSub(winCenter, mazeCenter);
+    // add the difference to our current position to center the maze
+    [self setPosition:ccpAdd(position_, diff)];
 }
 
 - (void)ccTouchesBegan:(NSSet*)touches withEvent:(UIEvent*)event
