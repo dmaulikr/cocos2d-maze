@@ -5,12 +5,13 @@
 
 #import "GameScene.h"
 #import "MazeGenerator.h"
+#import "GameLayer.h"
 
 @implementation GameScene
 - (id)init
 {
     self = [super init];
-    MazeGenerator *generator = [[[MazeGenerator alloc] init] autorelease];
+    [self addChild:[[[GameLayer alloc] init] autorelease]];
     return self;
 }
 @end

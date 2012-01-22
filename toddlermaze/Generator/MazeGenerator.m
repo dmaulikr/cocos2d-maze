@@ -52,7 +52,6 @@
 @property (nonatomic, assign) float density;
 @property (nonatomic, assign) CGPoint start;
 @property (nonatomic, assign) CGPoint end;
-@property (nonatomic, retain) NSMutableDictionary *grid;
 @property (nonatomic, assign) NSUInteger visited;
 @end
 
@@ -69,7 +68,7 @@
 - (id)init
 {
     self = [super init];
-    self.size = CGSizeMake(768 * 0.1f, 1024 * 0.1f);
+    self.size = CGSizeMake(50, 50);
     self.complexity = 0.5f;
     self.density = 0.5f;
     self.visited = 0;
@@ -89,8 +88,12 @@
         for (NSUInteger y = 0; y < self.size.height; y++) {
             MazeCell *cell = [[[MazeCell alloc] initWithIndex:[self createIndex:ccp(x, y)]] autorelease];
             cell.point = ccp(x, y);
-            [self addToNeighbors:cell];
             [self.grid setObject:cell forKey:cell.index];
+        }
+    }
+    for (NSUInteger x = 0; x < self.size.width; x++) {
+        for (NSUInteger y = 0; y < self.size.height; y++) {
+            [self addToNeighbors:[self.grid objectForKey:[self createIndex:ccp(x, y)]]];
         }
     }
     [self depthFirstSearch];
@@ -98,21 +101,10 @@
 
 - (void)addToNeighbors:(MazeCell *)cell
 {
-    for (int x = -1; x < 2; x++) {
-        for (int y = -1; y < 2; y++) {
-            // don't add ourselves as a neighbor
-            if (y == 0 && x == 0) {
-                continue;
-            }
-            // get the neighbor from the grid
-            MazeCell *neighbor = [self.grid objectForKey:[self createIndex:ccpAdd(cell.point, ccp(x, y))]];
-            if (neighbor == nil) {
-                continue;
-            }
-            // add the cell as a neighbor of the neighbor
-            [neighbor addNeighbor:cell];
-        }        
-    }
+    [[self.grid objectForKey:[self createIndex:ccpAdd(cell.point, kNorth)]] addNeighbor:cell];
+    [[self.grid objectForKey:[self createIndex:ccpAdd(cell.point, kSouth)]] addNeighbor:cell];
+    [[self.grid objectForKey:[self createIndex:ccpAdd(cell.point, kWest)]] addNeighbor:cell];
+    [[self.grid objectForKey:[self createIndex:ccpAdd(cell.point, kEast)]] addNeighbor:cell];
 }
 
 - (void)depthFirstSearch
@@ -124,27 +116,20 @@
     self.visited++;
     currentCell.visited = YES;
     // save some allocations
-    NSInteger x = 0, y = 0;
     // over allocating a bit here - 50% of the grid is unlikely to end up in the stack
     NSMutableArray *stack = [[NSMutableArray alloc] initWithCapacity:(NSUInteger)((self.size.width * self.size.height) * 0.5)];
     NSMutableArray *neighbors = [[NSMutableArray alloc] initWithCapacity:8];
     // iterate till every cell has been visited
     while (self.visited < count) {
         // grab each neighbor of our current cell
-        for (x = -1; x < 2; x++) {
-            for (y = -1; y < 2; y++) {
-                // skip our self
-                if (y == 0 && x == 0) {
-                    continue;
-                }
+        [currentCell.neighbors enumerateKeysAndObjectsUsingBlock:
+            ^(id key, id neighbor, BOOL *stop) {
                 // grab a neighbor and add it to the neighbors array
-                MazeCell *neighbor = [self.grid objectForKey:[self createIndex:ccpAdd(currentCell.point, ccp(x, y))]];
-                if (neighbor == nil || neighbor.visited == YES) {
-                    continue;
+                if ([neighbor visited] != YES) {
+                    [neighbors addObject:neighbor];
                 }
-                [neighbors addObject:neighbor];
             }
-        }
+        ];
         if (neighbors.count) {
             // if there is a current neighbor that has not been visited, we are switching currentCell to one of them
             [stack addObject:currentCell];
