@@ -19,7 +19,6 @@
     [self addChild:wallSprites];
     [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"walls.plist"];
     MazeGenerator *generator = [[[MazeGenerator alloc] init] autorelease];
-    float radius = 16;
     [generator.grid enumerateKeysAndObjectsUsingBlock:
         ^(id cellKey, id cell, BOOL *cellStop) {
             CGPoint cellPoint = ccpMult([cell point], 32);

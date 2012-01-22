@@ -68,7 +68,7 @@
 - (id)init
 {
     self = [super init];
-    self.size = CGSizeMake(50, 50);
+    self.size = CGSizeMake(30, 20);
     self.complexity = 0.5f;
     self.density = 0.5f;
     self.visited = 0;
@@ -81,6 +81,7 @@
     return [NSNumber numberWithFloat:point.x + point.y * self.size.width];
 }
 
+// create the grid and assign the grid neighbors
 - (void)generate
 {
     self.grid = [[[NSMutableDictionary alloc] initWithCapacity:(NSUInteger) (self.size.width * self.size.height)] autorelease];
@@ -133,15 +134,16 @@
         if (neighbors.count) {
             // if there is a current neighbor that has not been visited, we are switching currentCell to one of them
             [stack addObject:currentCell];
-            // get a random neighbor
-            NSUInteger newCell = arc4random() % neighbors.count;
-            currentCell = [neighbors objectAtIndex:newCell];
-            // we've visited it
-            currentCell.visited = YES;
-            // knock down the walls!
-            [currentCell removeWall:[stack objectAtIndex:stack.count - 1]];
+            // get a random neighbor cell
+            MazeCell *neighborCell = [neighbors objectAtIndex:arc4random() % neighbors.count];
+            neighborCell.visited = YES;
             self.visited++;
+            // knock down the walls!
+            [neighborCell removeWall:currentCell];
+            // update our current cell to be the newly selected cell
+            currentCell = neighborCell;
         } else {
+            // "pop" the top cell off the stack to resume a previously started trail
             currentCell = [stack objectAtIndex:stack.count - 1];
             [stack removeObjectAtIndex:stack.count - 1];
         }
