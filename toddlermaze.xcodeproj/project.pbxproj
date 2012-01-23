@@ -129,6 +129,7 @@
 		C2A9F82A14CB4A3200F18C26 /* horiz.png in Resources */ = {isa = PBXBuildFile; fileRef = C2A9F82A14CB4A3200F18C25 /* horiz.png */; };
 		C2A9F82A14CB4A3200F18C28 /* walls.plist in Resources */ = {isa = PBXBuildFile; fileRef = C2A9F82A14CB4A3200F18C27 /* walls.plist */; };
 		C2A9F82A14CB4A3200F18C2A /* walls.png in Resources */ = {isa = PBXBuildFile; fileRef = C2A9F82A14CB4A3200F18C29 /* walls.png */; };
+		C2A9F82A14CB4A3200F18C2C /* MazeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C2A9F82A14CB4A3200F18C2B /* MazeCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -376,6 +377,8 @@
 		C2A9F82A14CB4A3200F18C25 /* horiz.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = horiz.png; path = Resources/walls/horiz.png; sourceTree = "<group>"; };
 		C2A9F82A14CB4A3200F18C27 /* walls.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; name = walls.plist; path = Resources/walls/walls.plist; sourceTree = "<group>"; };
 		C2A9F82A14CB4A3200F18C29 /* walls.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = walls.png; path = Resources/walls/walls.png; sourceTree = "<group>"; };
+		C2A9F82A14CB4A3200F18C2B /* MazeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MazeCell.m; path = Generator/MazeCell.m; sourceTree = "<group>"; };
+		C2A9F82A14CB4A3200F18C2D /* MazeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MazeCell.h; path = Generator/MazeCell.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -432,6 +435,8 @@
 		C2A9F6CA14CB4A2F00F18C13 /* toddlermaze */ = {
 			isa = PBXGroup;
 			children = (
+				C2A9F82A14CB4A3200F18C2D /* MazeCell.h */,
+				C2A9F82A14CB4A3200F18C2B /* MazeCell.m */,
 				C2A9F82A14CB4A3200F18C25 /* horiz.png */,
 				C2A9F82A14CB4A3200F18C23 /* vert.png */,
 				C2A9F82A14CB4A3200F18C21 /* square.png */,
@@ -957,6 +962,7 @@
 				C2A9F82A14CB4A3200F18C15 /* GameScene.m in Sources */,
 				C2A9F82A14CB4A3200F18C18 /* GameLayer.m in Sources */,
 				C2A9F82A14CB4A3200F18C1B /* MazeGenerator.m in Sources */,
+				C2A9F82A14CB4A3200F18C2C /* MazeCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

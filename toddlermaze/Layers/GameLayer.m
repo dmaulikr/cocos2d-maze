@@ -3,14 +3,25 @@
 //         1/21/12
 //
 
+#import <AVFoundation/AVFoundation.h>
 #import "GameLayer.h"
 #import "MazeGenerator.h"
 #import "CCSpriteBatchNode.h"
 #import "CCSpriteFrameCache.h"
 #import "CCSprite.h"
 #import "CGPointExtension.h"
+#import "CCActionInterval.h"
+
+@interface GameLayer ()
+@property (nonatomic, retain) MazeGenerator *mazeGenerator;
+@property (nonatomic, assign) CCSprite *playerEntity;
+@end
 
 @implementation GameLayer
+@synthesize mazeGenerator = _mazeGenerator;
+@synthesize playerEntity = _playerEntity;
+
+
 - (id)init
 {
     self = [super init];
@@ -18,44 +29,34 @@
     CCSpriteBatchNode *wallSprites = [CCSpriteBatchNode batchNodeWithFile:@"walls.png" capacity:4];
     [self addChild:wallSprites];
     [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"walls.plist"];
+    self.mazeGenerator = [[[MazeGenerator alloc] init] autorelease];
+    [_mazeGenerator createUsingDepthFirstSearch];
     [self loadGeneratedMaze];
     return self;
 }
 
 - (void)loadGeneratedMaze
 {
-    MazeGenerator *generator = [[[MazeGenerator alloc] init] autorelease];
-    [generator.grid enumerateKeysAndObjectsUsingBlock:
+    [_mazeGenerator.grid enumerateKeysAndObjectsUsingBlock:
         ^(id cellKey, id cell, BOOL *cellStop) {
-            CGPoint cellPoint = ccpMult([cell point], 32);
-            [[cell walls] enumerateKeysAndObjectsUsingBlock:
-                ^(id wallKey, id neighbor, BOOL *wallStop) {
-                    CGPoint neighborPoint = ccpMult([neighbor point], 32);
-                    CCSprite *wall = nil;
-                    CGPoint wallPos = cellPoint;
-                    if (neighborPoint.x < cellPoint.x) {
-                        wall = [CCSprite spriteWithSpriteFrameName:@"vert.png"];
-                        wallPos.x -= 16;
-                    } else if (neighborPoint.x > cellPoint.x) {
-                        wall = [CCSprite spriteWithSpriteFrameName:@"vert.png"];
-                        wallPos.x += 16;
-                    } else if (neighborPoint.y < cellPoint.y) {
-                        wall = [CCSprite spriteWithSpriteFrameName:@"horiz.png"];
-                        wallPos.y -= 16;
-                    } else {
-                        wall = [CCSprite spriteWithSpriteFrameName:@"horiz.png"];
-                        wallPos.y += 16;
-                    }
-                    [wall setColor:ccGRAY];
-                    [wall setAnchorPoint:ccp(0.5, 0.5)];
-                    [wall setPosition:wallPos];
-                    [self addChild:wall];
-                }
-            ];
+            [self addChild:cell];
         }
     ];
-    // determine are maze center
-    CGPoint mazeCenter = ccp(generator.size.width/2 * 32, generator.size.height/2 * 32);
+    // determine our maze center
+    CGPoint mazeCenter = ccp((_mazeGenerator.size.width)/2, (_mazeGenerator.size.height)/2);
+    self.playerEntity = [CCSprite spriteWithSpriteFrameName:@"entity.png"];
+    [_playerEntity setPosition:ccp(mazeCenter.x, mazeCenter.y)];
+    CCSprite *glow = [CCSprite spriteWithSpriteFrameName:@"entity.png"];
+    [glow setBlendFunc: (ccBlendFunc) { GL_SRC_ALPHA, GL_ONE }];
+    id sequence = [CCSequence actions:
+        [CCFadeTo actionWithDuration:0.5f opacity:100],
+        [CCFadeTo actionWithDuration:0.5f opacity:255],
+        nil
+    ];
+    [glow runAction:[CCRepeatForever actionWithAction:sequence]];
+    [glow setPosition:ccp(glow.textureRect.size.width/2, glow.textureRect.size.height/2)];
+    [_playerEntity addChild:glow];
+    [self addChild:_playerEntity];
     // determine the window center
     CGSize winSize = [[CCDirector sharedDirector] winSize];
     CGPoint winCenter = ccp(winSize.width/2, winSize.height/2);
@@ -67,6 +68,7 @@
 
 - (void)ccTouchesBegan:(NSSet*)touches withEvent:(UIEvent*)event
 {
+
 }
 
 - (void)ccTouchesMoved:(NSSet*)touches withEvent:(UIEvent *)event
@@ -89,6 +91,16 @@
 
 - (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    UITouch *touch = [touches anyObject];
+    // get our GL location
+    CGPoint location = [[CCDirector sharedDirector]
+            convertToGL:[touch locationInView:touch.view]
+    ];
+    [_mazeGenerator searchUsingDepthFirstSearch:_playerEntity.position endingAt:ccpSub(location, position_) movingEntity:_playerEntity];
+}
 
+- (void)dealloc {
+    [_mazeGenerator release];
+    [super dealloc];
 }
 @end

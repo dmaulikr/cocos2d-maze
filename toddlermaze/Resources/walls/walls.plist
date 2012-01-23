@@ -4,23 +4,36 @@
     <dict>
         <key>frames</key>
         <dict>
-            <key>horiz.png</key>
+            <key>entity.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{0,0},{2,32}}</string>
+                <string>{{0,0},{16,16}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{2,32}}</string>
+                <string>{{0,0},{16,16}}</string>
                 <key>sourceSize</key>
-                <string>{2,32}</string>
+                <string>{16,16}</string>
+            </dict>
+            <key>horiz.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{16,0},{32,2}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{32,2}}</string>
+                <key>sourceSize</key>
+                <string>{32,2}</string>
             </dict>
             <key>square.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,0},{32,32}}</string>
+                <string>{{0,16},{32,32}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -33,15 +46,15 @@
             <key>vert.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{0,32},{32,2}}</string>
+                <string>{{32,16},{2,32}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{32,2}}</string>
+                <string>{{0,0},{2,32}}</string>
                 <key>sourceSize</key>
-                <string>{32,2}</string>
+                <string>{2,32}</string>
             </dict>
         </dict>
         <key>metadata</key>
@@ -53,7 +66,7 @@
             <key>size</key>
             <string>{64,64}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:cc571b31a0007cfaed64b2fb5735d60a$</string>
+            <string>$TexturePacker:SmartUpdate:a967eb94eef791c3e664b12473d464a4$</string>
             <key>textureFileName</key>
             <string>walls.png</string>
         </dict>
