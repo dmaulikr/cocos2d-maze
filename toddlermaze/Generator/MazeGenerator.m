@@ -122,6 +122,24 @@
 
 }
 
+- (MazeCell *)cellForPosition:(CGPoint)position
+{
+    __block float distance = INFINITY;
+    __block MazeCell *returnCell = nil;
+    [_grid enumerateKeysAndObjectsUsingBlock:
+        ^(id key, id cell, BOOL *stop) {
+            MazeCell *mazeCell = (MazeCell *)cell;
+            float curDistance = ccpDistance(position, mazeCell.position);
+            if (curDistance < distance) {
+                distance = curDistance;
+                returnCell = mazeCell;
+            }
+        }
+    ];
+    
+    return returnCell;
+}
+
 - (void)searchUsingDepthFirstSearch:(CGPoint)start endingAt:(CGPoint)end movingEntity:(CCSprite *)entity
 {
     __block float distance = INFINITY;
@@ -176,13 +194,17 @@
             // if there is a current neighbor that has not been visited, we are switching currentCell to one of them
             [stack addObject:currentCell];
             neighborCell.visited = YES;
-            // move to neighbor
+
             if (stackPopped == NO) {
+                // move to neighbor
                 [actions addObject:[CCMoveTo actionWithDuration:0.2f position:neighborCell.position]];
             } else {
+                // the entity has jumped someone not near - lets make it move there without making it look like
+                // it's flying through walls
                 [actions addObject:[CCFadeOut actionWithDuration:0.1f]];
                 [actions addObject:[CCMoveTo actionWithDuration:0.f position:currentCell.position]];
                 [actions addObject:[CCFadeIn actionWithDuration:0.1f]];
+                // finally, move to the newly added neighbor
                 [actions addObject:[CCMoveTo actionWithDuration:0.2f position:neighborCell.position]];
             }
             if (CGPointEqualToPoint(neighborCell.position, endCell.position)) {

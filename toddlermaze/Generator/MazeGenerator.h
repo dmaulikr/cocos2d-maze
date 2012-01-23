@@ -17,6 +17,8 @@
 
 - (void)createUsingDepthFirstSearch;
 
+- (MazeCell *)cellForPosition:(CGPoint)position;
+
 - (void)searchUsingDepthFirstSearch:(CGPoint)start endingAt:(CGPoint)end movingEntity:(CCSprite *)entity;
 
 

@@ -3,24 +3,27 @@
 //         1/21/12
 //
 
-#import <AVFoundation/AVFoundation.h>
 #import "GameLayer.h"
 #import "MazeGenerator.h"
 #import "CCSpriteBatchNode.h"
 #import "CCSpriteFrameCache.h"
 #import "CCSprite.h"
 #import "CGPointExtension.h"
-#import "CCActionInterval.h"
+#import "MazeCell.h"
+#import "Entity.h"
 
 @interface GameLayer ()
 @property (nonatomic, retain) MazeGenerator *mazeGenerator;
-@property (nonatomic, assign) CCSprite *playerEntity;
+@property (nonatomic, assign) Entity *playerEntity;
+@property (nonatomic, assign) Entity *currentStart;
+@property (nonatomic, assign) Entity *currentEnd;
 @end
 
 @implementation GameLayer
 @synthesize mazeGenerator = _mazeGenerator;
 @synthesize playerEntity = _playerEntity;
-
+@synthesize currentStart = _currentStart;
+@synthesize currentEnd = _currentEnd;
 
 - (id)init
 {
@@ -44,18 +47,9 @@
     ];
     // determine our maze center
     CGPoint mazeCenter = ccp((_mazeGenerator.size.width)/2, (_mazeGenerator.size.height)/2);
-    self.playerEntity = [CCSprite spriteWithSpriteFrameName:@"entity.png"];
-    [_playerEntity setPosition:ccp(mazeCenter.x, mazeCenter.y)];
-    CCSprite *glow = [CCSprite spriteWithSpriteFrameName:@"entity.png"];
-    [glow setBlendFunc: (ccBlendFunc) { GL_SRC_ALPHA, GL_ONE }];
-    id sequence = [CCSequence actions:
-        [CCFadeTo actionWithDuration:0.5f opacity:100],
-        [CCFadeTo actionWithDuration:0.5f opacity:255],
-        nil
-    ];
-    [glow runAction:[CCRepeatForever actionWithAction:sequence]];
-    [glow setPosition:ccp(glow.textureRect.size.width/2, glow.textureRect.size.height/2)];
-    [_playerEntity addChild:glow];
+    self.playerEntity = [Entity spriteWithFile:@"entity.png"];
+    MazeCell *centerCell = [_mazeGenerator cellForPosition:mazeCenter];
+    [_playerEntity setPosition:centerCell.position];
     [self addChild:_playerEntity];
     // determine the window center
     CGSize winSize = [[CCDirector sharedDirector] winSize];
@@ -96,6 +90,21 @@
     CGPoint location = [[CCDirector sharedDirector]
             convertToGL:[touch locationInView:touch.view]
     ];
+    [_playerEntity stopAllActions];
+    if (_currentStart == nil) {
+        _currentStart = [Entity spriteWithFile:@"entity.png"];
+        [_currentStart setColor:ccRED];
+        [self addChild:_currentStart];
+    }
+    [_currentStart setPosition:_playerEntity.position];
+    if (_currentEnd == nil) {
+        _currentEnd = [Entity spriteWithFile:@"entity.png"];
+        [_currentEnd setColor:ccGREEN];
+        [self addChild:_currentEnd];
+    }
+    MazeCell *cell = [_mazeGenerator cellForPosition:ccpSub(location, position_)];
+    [_currentEnd setPosition:cell.position];
+
     [_mazeGenerator searchUsingDepthFirstSearch:_playerEntity.position endingAt:ccpSub(location, position_) movingEntity:_playerEntity];
 }
 
