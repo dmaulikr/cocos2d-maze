@@ -7,6 +7,8 @@
 #import "CGPointExtension.h"
 #import "CCActionInterval.h"
 #import "MazeCell.h"
+#import "CCActionInstant.h"
+#import "Entity.h"
 
 @interface MazeGenerator ()
 @property (nonatomic, assign) float complexity;
@@ -139,7 +141,7 @@
     return returnCell;
 }
 
-- (void)searchUsingDepthFirstSearch:(CGPoint)start endingAt:(CGPoint)end movingEntity:(CCSprite *)entity
+- (void)searchUsingDepthFirstSearch:(CGPoint)start endingAt:(CGPoint)end movingEntity:(Entity *)entity
 {
     __block float distance = INFINITY;
     __block NSNumber *index = nil;
@@ -196,6 +198,7 @@
             if (stackPopped == NO) {
                 // move to neighbor
                 [actions addObject:[CCMoveTo actionWithDuration:0.2f position:neighborCell.position]];
+                [actions addObject:[CCCallFuncN actionWithTarget:entity selector:@selector(dropCurrent:)]];
             } else {
                 // the entity has jumped someone not near - lets make it move there without making it look like
                 // it's flying through walls
@@ -204,6 +207,7 @@
                 [actions addObject:[CCFadeIn actionWithDuration:0.1f]];
                 // finally, move to the newly added neighbor
                 [actions addObject:[CCMoveTo actionWithDuration:0.2f position:neighborCell.position]];
+                [actions addObject:[CCCallFuncN actionWithTarget:entity selector:@selector(dropCurrent:)]];
             }
             if (CGPointEqualToPoint(neighborCell.position, endCell.position)) {
                 found = YES;
@@ -218,6 +222,8 @@
                 impossible = YES;
                 break;
             }
+            [actions addObject:[CCMoveTo actionWithDuration:0 position:currentCell.position]];
+            [actions addObject:[CCCallFuncN actionWithTarget:entity selector:@selector(dropCancelled:)]];
             // "pop" the top cell off the stack to resume a previously started trail
             currentCell = [stack objectAtIndex:stack.count - 1];
             [stack removeObjectAtIndex:stack.count - 1];

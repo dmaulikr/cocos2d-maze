@@ -7,6 +7,7 @@
 
 @class MazeCell;
 @class CCSprite;
+@class Entity;
 
 @interface MazeGenerator : NSObject
 @property (nonatomic, retain) NSMutableDictionary *grid;
@@ -19,7 +20,7 @@
 
 - (MazeCell *)cellForPosition:(CGPoint)position;
 
-- (void)searchUsingDepthFirstSearch:(CGPoint)start endingAt:(CGPoint)end movingEntity:(CCSprite *)entity;
+- (void)searchUsingDepthFirstSearch:(CGPoint)start endingAt:(CGPoint)end movingEntity:(Entity *)entity;
 
 
 @end

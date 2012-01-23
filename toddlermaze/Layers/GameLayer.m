@@ -103,7 +103,7 @@
     CGPoint location = [[CCDirector sharedDirector]
             convertToGL:[touch locationInView:touch.view]
     ];
-    [_playerEntity stopAllActions];
+    [_playerEntity beginMovement];
     if (_currentStart == nil) {
         _currentStart = [Entity spriteWithFile:@"entity.png"];
         [_currentStart setColor:ccRED];

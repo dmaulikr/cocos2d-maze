@@ -8,4 +8,9 @@
 
 @interface Entity : CCSprite
 
+- (void)beginMovement;
+
+- (void)dropCurrent:(id)node;
+- (void)dropCancelled:(id)node;
+
 @end
