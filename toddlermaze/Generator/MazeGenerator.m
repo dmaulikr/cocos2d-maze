@@ -175,7 +175,6 @@
     BOOL found = NO;
     BOOL impossible = NO;
     NSMutableArray *stack = [[NSMutableArray alloc] initWithCapacity:10];
-    NSMutableArray *neighbors = [[NSMutableArray alloc] initWithCapacity:4];
     BOOL stackPopped = NO;
     while (!found && !impossible) {
         __block MazeCell *neighborCell = nil;
@@ -224,7 +223,6 @@
             [stack removeObjectAtIndex:stack.count - 1];
         }
     }
-    [neighbors release];
     [stack release];
     if (found) {
         id sequence = [CCSequence actionsWithArray:actions];
