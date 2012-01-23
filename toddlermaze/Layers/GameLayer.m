@@ -11,6 +11,7 @@
 #import "CGPointExtension.h"
 #import "MazeCell.h"
 #import "Entity.h"
+#import "Constants.h"
 
 @interface GameLayer ()
 @property (nonatomic, retain) MazeGenerator *mazeGenerator;
@@ -33,9 +34,20 @@
     [self addChild:wallSprites];
     [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"walls.plist"];
     self.mazeGenerator = [[[MazeGenerator alloc] init] autorelease];
+    [self regenerateMaze];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(regenerateMaze) name:kRegenerateMazeNotification object:nil];
+    return self;
+}
+
+- (void)regenerateMaze
+{
+    [self removeAllChildrenWithCleanup:YES];
+    _currentStart = nil;
+    _currentEnd = nil;
+    _playerEntity = nil;
+    [self setPosition:ccp(0, 0)];
     [_mazeGenerator createUsingDepthFirstSearch];
     [self loadGeneratedMaze];
-    return self;
 }
 
 - (void)loadGeneratedMaze
@@ -47,8 +59,9 @@
     ];
     // determine our maze center
     CGPoint mazeCenter = ccp((_mazeGenerator.size.width)/2, (_mazeGenerator.size.height)/2);
-    self.playerEntity = [Entity spriteWithFile:@"entity.png"];
+    // find our center cell
     MazeCell *centerCell = [_mazeGenerator cellForPosition:mazeCenter];
+    self.playerEntity = [Entity spriteWithFile:@"entity.png"];
     [_playerEntity setPosition:centerCell.position];
     [self addChild:_playerEntity];
     // determine the window center
@@ -109,6 +122,7 @@
 }
 
 - (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [_mazeGenerator release];
     [super dealloc];
 }

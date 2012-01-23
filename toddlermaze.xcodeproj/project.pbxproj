@@ -132,6 +132,8 @@
 		C2A9F82A14CB4A3200F18C2C /* MazeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C2A9F82A14CB4A3200F18C2B /* MazeCell.m */; };
 		C2A9F82A14CB4A3200F18C2F /* entity.png in Resources */ = {isa = PBXBuildFile; fileRef = C2A9F82A14CB4A3200F18C2E /* entity.png */; };
 		C2A9F82A14CB4A3200F18C31 /* Entity.m in Sources */ = {isa = PBXBuildFile; fileRef = C2A9F82A14CB4A3200F18C30 /* Entity.m */; };
+		C2A9F82A14CB4A3200F18C34 /* GuiLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = C2A9F82A14CB4A3200F18C33 /* GuiLayer.m */; };
+		C2A9F82A14CB4A3200F18C37 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = C2A9F82A14CB4A3200F18C36 /* Constants.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -384,6 +386,10 @@
 		C2A9F82A14CB4A3200F18C2E /* entity.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = entity.png; path = Resources/walls/entity.png; sourceTree = "<group>"; };
 		C2A9F82A14CB4A3200F18C30 /* Entity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Entity.m; sourceTree = "<group>"; };
 		C2A9F82A14CB4A3200F18C32 /* Entity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Entity.h; sourceTree = "<group>"; };
+		C2A9F82A14CB4A3200F18C33 /* GuiLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GuiLayer.m; path = Layers/GuiLayer.m; sourceTree = "<group>"; };
+		C2A9F82A14CB4A3200F18C35 /* GuiLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GuiLayer.h; path = Layers/GuiLayer.h; sourceTree = "<group>"; };
+		C2A9F82A14CB4A3200F18C36 /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
+		C2A9F82A14CB4A3200F18C38 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -440,6 +446,10 @@
 		C2A9F6CA14CB4A2F00F18C13 /* toddlermaze */ = {
 			isa = PBXGroup;
 			children = (
+				C2A9F82A14CB4A3200F18C38 /* Constants.h */,
+				C2A9F82A14CB4A3200F18C36 /* Constants.m */,
+				C2A9F82A14CB4A3200F18C35 /* GuiLayer.h */,
+				C2A9F82A14CB4A3200F18C33 /* GuiLayer.m */,
 				C2A9F82A14CB4A3200F18C32 /* Entity.h */,
 				C2A9F82A14CB4A3200F18C30 /* Entity.m */,
 				C2A9F82A14CB4A3200F18C2D /* MazeCell.h */,
@@ -973,6 +983,8 @@
 				C2A9F82A14CB4A3200F18C1B /* MazeGenerator.m in Sources */,
 				C2A9F82A14CB4A3200F18C2C /* MazeCell.m in Sources */,
 				C2A9F82A14CB4A3200F18C31 /* Entity.m in Sources */,
+				C2A9F82A14CB4A3200F18C34 /* GuiLayer.m in Sources */,
+				C2A9F82A14CB4A3200F18C37 /* Constants.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

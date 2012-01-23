@@ -11,7 +11,6 @@
 @interface MazeGenerator ()
 @property (nonatomic, assign) float complexity;
 @property (nonatomic, assign) float density;
-@property (nonatomic, assign) NSUInteger visited;
 @end
 
 @implementation MazeGenerator
@@ -19,7 +18,6 @@
 @synthesize complexity = _complexity;
 @synthesize density    = _density;
 @synthesize grid       = _grid;
-@synthesize visited    = _visited;
 
 - (id)init
 {
@@ -27,8 +25,7 @@
     self.size = CGSizeMake(900, 600);
     self.complexity = 0.5f;
     self.density = 0.5f;
-    self.visited = 0;
-    [self generateGrid];
+
     return self;
 }
 
@@ -65,8 +62,10 @@
 
 - (void)createUsingDepthFirstSearch
 {
+    [self generateGrid];
     // we are going to iterate till every cell has been visited
     NSUInteger count = [self.grid count];
+    NSUInteger visited = 0;
     // get a random cell in the grid
     MazeCell *currentCell = nil;
     NSEnumerator *cellEnumerator = [self.grid objectEnumerator];
@@ -75,13 +74,13 @@
         currentCell = [cellEnumerator nextObject];
         randomCell--;
     } while(randomCell > 0);
-    self.visited++;
+    visited++;
     currentCell.visited = YES;
     // save some allocations
     NSMutableArray *stack = [[NSMutableArray alloc] initWithCapacity:32];
     NSMutableArray *neighbors = [[NSMutableArray alloc] initWithCapacity:4];
     // iterate till every cell has been visited
-    while (self.visited < count) {
+    while (visited < count) {
         // grab each neighbor of our current cell
         [currentCell.neighbors enumerateKeysAndObjectsUsingBlock:
             ^(id key, id neighbor, BOOL *stop) {
@@ -97,7 +96,7 @@
             // get a random neighbor cell
             MazeCell *neighborCell = [neighbors objectAtIndex:arc4random() % neighbors.count];
             neighborCell.visited = YES;
-            self.visited++;
+            visited++;
             // knock down the walls!
             [neighborCell removeWall:currentCell];
             [currentCell removeWall:neighborCell];
@@ -191,7 +190,7 @@
                 }
         ];
         if (neighborCell) {
-            // if there is a current neighbor that has not been visited, we are switching currentCell to one of them
+            // this neighbor cell will become the current cell
             [stack addObject:currentCell];
             neighborCell.visited = YES;
 
