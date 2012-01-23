@@ -109,7 +109,8 @@
         [_currentStart setColor:ccRED];
         [self addChild:_currentStart];
     }
-    [_currentStart setPosition:_playerEntity.position];
+    MazeCell *startCell = [_mazeGenerator cellForPosition:_playerEntity.position];
+    [_currentStart setPosition:startCell.position];
     if (_currentEnd == nil) {
         _currentEnd = [Entity spriteWithFile:@"entity.png"];
         [_currentEnd setColor:ccGREEN];

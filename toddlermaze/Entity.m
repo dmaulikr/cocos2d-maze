@@ -57,14 +57,14 @@
 {
     CCSprite *current = [CCSprite spriteWithFile:@"entity.png"];
     [current setColor:ccBLUE];
-    [current setPosition:node.position];
+    [current setPosition:position_];
     [_currentEntities addObject:current];
     [self.parent addChild:current];
 }
 
 - (void)dropCancelled:(CCSprite *)node
 {
-    CGPoint pos = node.position;
+    CGPoint pos = position_;
     __block CCSprite *current = nil;
     __block NSUInteger currentKey = 0;
     [_currentEntities enumerateObjectsUsingBlock:
