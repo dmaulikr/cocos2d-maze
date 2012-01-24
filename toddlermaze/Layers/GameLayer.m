@@ -103,23 +103,25 @@
     CGPoint location = [[CCDirector sharedDirector]
             convertToGL:[touch locationInView:touch.view]
     ];
-    [_playerEntity beginMovement];
-    if (_currentStart == nil) {
-        _currentStart = [Entity spriteWithFile:@"entity.png"];
-        [_currentStart setColor:ccRED];
-        [self addChild:_currentStart];
-    }
-    MazeCell *startCell = [_mazeGenerator cellForPosition:_playerEntity.position];
-    [_currentStart setPosition:startCell.position];
-    if (_currentEnd == nil) {
-        _currentEnd = [Entity spriteWithFile:@"entity.png"];
-        [_currentEnd setColor:ccGREEN];
-        [self addChild:_currentEnd];
-    }
-    MazeCell *cell = [_mazeGenerator cellForPosition:ccpSub(location, position_)];
-    [_currentEnd setPosition:cell.position];
+    if ([_mazeGenerator isPositionInMaze:ccpSub(location, position_)]) {
+        [_playerEntity beginMovement];
+        if (_currentStart == nil) {
+            _currentStart = [Entity spriteWithFile:@"entity.png"];
+            [_currentStart setColor:ccRED];
+            [self addChild:_currentStart];
+        }
+        MazeCell *startCell = [_mazeGenerator cellForPosition:_playerEntity.position];
+        [_currentStart setPosition:startCell.position];
+        if (_currentEnd == nil) {
+            _currentEnd = [Entity spriteWithFile:@"entity.png"];
+            [_currentEnd setColor:ccGREEN];
+            [self addChild:_currentEnd];
+        }
+        MazeCell *cell = [_mazeGenerator cellForPosition:ccpSub(location, position_)];
+        [_currentEnd setPosition:cell.position];
 
-    [_mazeGenerator searchUsingDepthFirstSearch:_playerEntity.position endingAt:ccpSub(location, position_) movingEntity:_playerEntity];
+        [_mazeGenerator searchUsingDepthFirstSearch:_playerEntity.position endingAt:ccpSub(location, position_) movingEntity:_playerEntity];
+    }
 }
 
 - (void)dealloc {

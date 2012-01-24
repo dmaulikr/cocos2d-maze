@@ -18,6 +18,8 @@
 
 - (void)createUsingDepthFirstSearch;
 
+- (BOOL)isPositionInMaze:(CGPoint)position;
+
 - (MazeCell *)cellForPosition:(CGPoint)position;
 
 - (void)searchUsingDepthFirstSearch:(CGPoint)start endingAt:(CGPoint)end movingEntity:(Entity *)entity;

@@ -123,6 +123,11 @@
 
 }
 
+- (BOOL)isPositionInMaze:(CGPoint)position
+{
+    return position.x > 0 && position.y > 0 && position.x < _size.width && position.y < _size.height;
+}
+
 - (MazeCell *)cellForPosition:(CGPoint)position
 {
     __block float distance = INFINITY;
