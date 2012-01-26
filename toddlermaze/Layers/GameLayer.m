@@ -15,6 +15,7 @@
 
 @interface GameLayer ()
 @property (nonatomic, retain) MazeGenerator *mazeGenerator;
+@property (nonatomic, retain) CCSpriteBatchNode *batchNode;
 @property (nonatomic, assign) Entity *playerEntity;
 @property (nonatomic, assign) Entity *currentStart;
 @property (nonatomic, assign) Entity *currentEnd;
@@ -25,15 +26,17 @@
 @synthesize playerEntity = _playerEntity;
 @synthesize currentStart = _currentStart;
 @synthesize currentEnd = _currentEnd;
+@synthesize batchNode = _batchNode;
+
 
 - (id)init
 {
     self = [super init];
     self.isTouchEnabled = YES;
-    CCSpriteBatchNode *wallSprites = [CCSpriteBatchNode batchNodeWithFile:@"walls.png" capacity:4];
-    [self addChild:wallSprites];
     [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"walls.plist"];
-    self.mazeGenerator = [[[MazeGenerator alloc] init] autorelease];
+    self.batchNode = [CCSpriteBatchNode batchNodeWithFile:@"walls.png"];
+    [self addChild:_batchNode];
+    self.mazeGenerator = [[[MazeGenerator alloc] initWithBatchNode:_batchNode] autorelease];
     [self regenerateMaze];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(regenerateMaze) name:kRegenerateMazeNotification object:nil];
     return self;
@@ -42,6 +45,8 @@
 - (void)regenerateMaze
 {
     [self removeAllChildrenWithCleanup:YES];
+    [_batchNode removeAllChildrenWithCleanup:YES];
+    [self addChild:_batchNode];
     _currentStart = nil;
     _currentEnd = nil;
     _playerEntity = nil;
@@ -52,11 +57,6 @@
 
 - (void)loadGeneratedMaze
 {
-    [_mazeGenerator.grid enumerateKeysAndObjectsUsingBlock:
-        ^(id cellKey, id cell, BOOL *cellStop) {
-            [self addChild:cell];
-        }
-    ];
     // determine our maze center
     CGPoint mazeCenter = ccp((_mazeGenerator.size.width)/2, (_mazeGenerator.size.height)/2);
     // find our center cell

@@ -8,10 +8,14 @@
 @class MazeCell;
 @class CCSprite;
 @class Entity;
+@class CCSpriteBatchNode;
 
 @interface MazeGenerator : NSObject
 @property (nonatomic, retain) NSMutableDictionary *grid;
 @property (nonatomic, assign) CGSize size;
+
+- (id)initWithBatchNode:(CCSpriteBatchNode *)batch;
+
 - (void)generateGrid;
 
 - (void)addToNeighbors:(MazeCell *)cell;

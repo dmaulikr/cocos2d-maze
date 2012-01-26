@@ -9,10 +9,12 @@
 #import "MazeCell.h"
 #import "CCActionInstant.h"
 #import "Entity.h"
+#import "CCSpriteBatchNode.h"
 
 @interface MazeGenerator ()
 @property (nonatomic, assign) float complexity;
 @property (nonatomic, assign) float density;
+@property (nonatomic, assign) CCSpriteBatchNode *batch;
 @end
 
 @implementation MazeGenerator
@@ -20,10 +22,13 @@
 @synthesize complexity = _complexity;
 @synthesize density    = _density;
 @synthesize grid       = _grid;
+@synthesize batch = _batch;
 
-- (id)init
+
+- (id)initWithBatchNode:(CCSpriteBatchNode *)batch
 {
     self = [super init];
+    self.batch = batch;
     self.size = CGSizeMake(900, 600);
     self.complexity = 0.5f;
     self.density = 0.5f;
@@ -42,7 +47,7 @@
     self.grid = [[[NSMutableDictionary alloc] initWithCapacity:(NSUInteger) (self.size.width * self.size.height / 32)] autorelease];
     for (NSUInteger x = 0; x <= self.size.width; x+=32) {
         for (NSUInteger y = 0; y <= self.size.height; y+=32) {
-            MazeCell *cell = [[[MazeCell alloc] initWithIndex:[self createIndex:ccp(x, y)]] autorelease];
+            MazeCell *cell = [[[MazeCell alloc] initWithIndex:[self createIndex:ccp(x, y)] andBatchNode:_batch] autorelease];
             [cell setPosition:ccp(x, y)];
             [self.grid setObject:cell forKey:cell.index];
         }
@@ -120,6 +125,16 @@
 
 - (void)searchUsingAStar:(CGPoint)start endingAt:(CGPoint)end movingEntity:(CCSprite *)entity
 {
+    if (CGPointEqualToPoint(start, end)) {
+        return;
+    }
+    
+    MazeCell *startCell = [self cellForPosition:start];
+    MazeCell *endCell = [self cellForPosition:end];
+    if (startCell == nil || endCell == nil || [startCell isEqual:endCell]) {
+        return;
+    }
+
 
 }
 

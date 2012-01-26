@@ -13,7 +13,7 @@ static const CGPoint kWest = {-32, 0};
 static const CGPoint kEast = {32, 0};
 
 @interface MazeCell : CCSprite
-- (id)initWithIndex:(NSNumber *)index;
+- (id)initWithIndex:(NSNumber *)index andBatchNode:(CCSpriteBatchNode *)batch;
 - (void)addNeighbor:(MazeCell *)neighbor;
 - (void)removeWall:(MazeCell *)neighbor;
 
